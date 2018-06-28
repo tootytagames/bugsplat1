@@ -197,7 +197,11 @@ var mainState = {
 };
 
 // Initialize Phaser, and create a 400px by 490px game
-var game = new Phaser.Game(400, 490);
+// var game = new Phaser.Game(400, 490);
+
+// Initialize Phaser, make it scale nicely, we hope.
+var game = new Phaser.Game(window.innerWidth * window.devicePixelRatio,
+    window.innerHeight * window.devicePixelRatio, Phaser.CANVAS);
 
 // Add the 'mainState' and call it 'main'
 game.state.add('main', mainState); 
