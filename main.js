@@ -15,11 +15,31 @@ var mainState = {
     	game.load.audio('jump', 'assets/jump.wav');
 
     	game.load.audio('die', 'assets/splat.wav');
+
+        // sound track
+        game.load.audio('gummybearsong', 'assets/gummybearsong.wav');
     },
 
     create: function() { 
         // This function is called after the preload function     
         // Here we set up the game, display sprites, etc.
+
+        // If this is not a desktop (so it's a mobile device) 
+        if (game.device.desktop == false) {
+            
+            // Set the scaling mode to SHOW_ALL to show all the game
+            game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+
+            // Set a minimum and maximum size for the game
+            // Here the minimum is half the game size
+            // And the maximum is the original game size
+            game.scale.setMinMax(game.width/2, game.height/2, 
+                game.width, game.height);
+
+            // Center the game horizontally and vertically
+            game.scale.pageAlignHorizontally = true;
+            game.scale.pageAlignVertically = true;
+        }
 
         // Change the background color of the game to blue
     	game.stage.backgroundColor = '#71c5cf';
@@ -45,6 +65,10 @@ var mainState = {
                     Phaser.Keyboard.SPACEBAR);
     
     	spaceKey.onDown.add(this.jump, this);
+    	// var tap = this.game.input.onTap.add(this.jump, this);
+
+        // Call the 'jump' function when we tap/click on the screen
+        game.input.onDown.add(this.jump, this);
 
     	this.score = 0;
 		this.labelScore = game.add.text(20, 20, "0", 
@@ -58,6 +82,11 @@ var mainState = {
 		// Add our jump sound
 		this.jumpSound = game.add.audio('jump');
 		this.dieSound = game.add.audio('die');
+
+        if (! this.gummybearsong) {
+            this.gummybearsong = game.add.audio('gummybearsong', 0.3, true);
+            this.gummybearsong.play();
+        }
     },
 
     update: function() {
@@ -94,6 +123,8 @@ var mainState = {
 	// Restart the game
 	restartGame: function() {
     	
+        // this.gummybearsong.stop();
+
     	// Start the 'main' state, which restarts the game
     	game.state.start('main');
 	},
@@ -160,11 +191,7 @@ var mainState = {
     	// Add no text so the message doesn't appear on top
     	// of the score
 
-    	this.labelScore = game.add.text(20, 20, "   ", 
-    		{ font: "30px Arial", fill: "#ffffff" });
-
-    	this.labelScore = game.add.text(20, 20, "Dead bug!", 
-    		{ font: "30px Arial", fill: "#ffffff" });
+    	this.labelScore.text = "Dead bug!";
 	}, 
 
 };
