@@ -154,10 +154,10 @@ var mainState = {
     	// This will be the hole position
     	var hole = Math.floor(Math.random() * 5) + 1;
 
-    	// Add the 6 pipes 
+    	// Add the 8 pipes 
     	// With one big hole at position 'hole' and 'hole + 1'
     
-    	for (var i = 0; i < 8; i++)
+    	for (var i = 0; i < 10; i++)
         	if (i != hole && i != hole + 1 && i != hole + 2) 
             	this.addOnePipe(400, i * 60 + 10);
 
